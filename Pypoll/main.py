@@ -1,57 +1,81 @@
 import os
 import csv
 
+candidates = []
+votes = {}
+total= 0
+winning_count = 0
+winning_percentage = 0
+winner = " "
+percentage = 0   
+result = {}
+unique_candidate = []
+
+# Giving the file path 
 filepath = os.path.join("Resources","election_data.csv")
 
+# Reading the csv file
 with open (filepath,'r') as electiondata:
 
     csvreader = csv.reader(electiondata ,delimiter=',')
     csv_header = next(csvreader)
     #print(f'CSV Header: {csv_header}')
-    total= 0
+    
     
     #Candidates lists for storing number of counts of votes and number of times candidates appeared
-    candidates = []
-    votes = []
-    Charles =[]
-    Diana = []
-    Raymon = []
-
+    
  # for loop to loop in each row of data after the header
 
-    for row in csvreader :
-      candidates.append(row[2])
-      votes.append(row[0])
-     
+    for row in csvreader:
+      
      # total number of votes   
       total += 1
+     
+      name = row[2]
 
-      
-      for name in candidates:
+    
+    # Checking if the name is already in the candidates list if not adding it to the list and adding the vote count
+        
+      if name not in candidates:
+          candidates.append(name)
+          votes[name] = 0
          
-       if name =="Charles Casper Stockham":
-        Charles.append(candidates) 
-        votes_charles = len(Charles) 
+      
+      votes[name] += 1
 
-       elif name == "Diana DeGette":
-         Diana.append(candidates)
-         votes_diana = len(Diana)
+# Calculating the percentages
        
-       else: 
-          Raymon.append(candidates)
-          votes_raymon = len(Raymon)
+    for candidates in votes:
+        vote_candidates = votes[candidates]
 
-    percentage_charles = round(((votes_charles / total) * 100), 2)
-    percentage_diana = round(((votes_diana / total) * 100), 2)
-    percentage_raymon = round(((votes_raymon / total) * 100), 2)
+        
+        results = (f'{candidates}: {percentage:,.2f}% ({vote_candidates:})\n')
 
-print(f'Election Analysis')
-print("----------------------------------------------------------------------------------")
-print(f'total votes :',total)
+         
+        #print(type(results))
 
-print(f"Charles: %{percentage_charles} ({votes_charles})")   
-print(f"Charles: %{percentage_diana} ({votes_diana})")   
-print(f"Charles: %{percentage_raymon} ({votes_raymon})")   
+        if(vote_candidates> winning_count):
+    
+           winning_count = vote_candidates
+           winner = candidates
+ 
+ # printing the results
+           
+print("Election Results")
+print("--------------------------------------------------------------------")   
+print('Total votes',total) 
+print("--------------------------------------------------------------------") 
+for candidates in votes:
+  vote = votes.get(candidates)
+  percentage = float(vote) / float(total) * 100
+  (f'{candidates}: {percentage:,.2f}% ({vote:})\n')
+ 
+   #voter_output = f('Candidates')
+  print(f'{candidates}: {percentage:,.2f}% ({vote:})\n')
+print("--------------------------------------------------------------------")  
+print(f'Winner:', winner)    
+        
+
 
 
 
