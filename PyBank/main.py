@@ -70,10 +70,19 @@ with open(csvpath,'r') as budgetfile:
     
    
     
+# writing a text file
+
+Pyfile = os.path.join("Analysis","Pybank.txt")
+with open(Pyfile,'w') as outfile:
 
 
-
-
+    outfile.write("Financial Analysis\n")
+    outfile.write("-------------------------------------------------------------------------------------------------\n")
+    outfile.write(f'Total :${total}\n')
+    outfile.write(f'Total Months:{len(months)}')
+    outfile.write(f'Average Change:{round(sum(change_list)/len(change_list),2)}\n')
+    outfile.write(f'Greatest increase in Profits{Max_month,(greatest_increase)}\n')
+    outfile.write(f'Greatest decrease in Profits{Min_month,(greatest_decrease)}\n')
 
 
     
