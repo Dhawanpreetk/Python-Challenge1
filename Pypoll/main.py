@@ -75,8 +75,18 @@ for candidates in votes:
 print("--------------------------------------------------------------------")  
 print(f'Winner:', winner)    
         
+#Write to a text file
+paths = os.path.join("Analysis","election.txt")
+with open(paths,'w') as outfile:
+   
 
-
-
-
-
+      outfile.write("Election Results\n")
+      outfile.write("-------------------------\n")
+      for candidates in votes:
+             vote = votes.get(candidates)
+             percentage = float(vote) / float(total) * 100
+             (f'{candidates}: {percentage:,.2f}% ({vote:})\n')
+             outfile.write(f'{candidates}: {percentage:,.2f}% ({vote:})\n')
+      outfile.write("--------------------------------------------------------------------\n")  
+      outfile.write(f'Winner: {winner}')    
+         
